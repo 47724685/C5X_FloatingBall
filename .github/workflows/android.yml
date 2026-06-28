@@ -1,4 +1,5 @@
-name: Android Build
+
+name: Build APK
 
 on:
   push:
@@ -12,17 +13,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup JDK 17
+      - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
 
-      - name: Fix gradlew
-        run: chmod +x gradlew
-
       - name: Build APK
-        run: ./gradlew clean assembleDebug --stacktrace
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
